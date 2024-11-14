@@ -1,0 +1,27 @@
+name: devShells build test
+on:
+  push:
+    paths:
+      - '.github/workflows/devshells-build.yaml'
+      - 'devenv/**'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v11
+        with:
+          extra-conf: |
+            trusted-substituters = https://cache.nixos.org/ https://nix-community.cachix.org https://devenv.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
+            sandbox = true
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - name: Run Devenv Tests
+        run: |
+          for dir in tests/devenv/*/; do
+            echo "Running test in $dir"
+            (cd "$dir" && nix run nixpkgs#devenv test)
+          done
