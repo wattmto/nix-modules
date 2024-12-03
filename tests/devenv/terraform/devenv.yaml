@@ -1,0 +1,4 @@
+allowUnfree: true
+inputs:
+  my-modules:
+    url: path:../../../
