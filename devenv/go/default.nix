@@ -37,7 +37,6 @@ in
       # TODO: Build with specific go version after https://github.com/NixOS/nixpkgs/pull/339057 fixes
       # (buildWithSpecificGo pkgs.golangci-lint)
       pkgs.golangci-lint
-      (buildWithSpecificGo pkgs.ko)
     ];
   };
 }
