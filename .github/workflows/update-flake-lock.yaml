@@ -12,9 +12,14 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: DeterminateSystems/update-flake-lock@v20
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@v25
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pr-title: "chore: update flake.lock"
-          commit-msg: "chore: update flake.lock"
-
+          pr-title: "Update flake.lock"
+          pr-labels: |
+            dependencies
+            automated
