@@ -7,11 +7,8 @@
 let
   cfg = config.my.go;
 
-  goVersion = (lib.versions.major cfg.package.version) + (lib.versions.minor cfg.package.version);
-
-  buildWithSpecificGo =
-    pkg:
-    pkg.override { buildGoModule = pkgs."buildGo${goVersion}Module".override { go = cfg.package; }; };
+  buildGoModule = pkgs.buildGoModule.override { go = cfg.package; };
+  buildWithSpecificGo = pkg: pkg.override { inherit buildGoModule; };
 in
 {
   options.my.go = {
@@ -34,9 +31,7 @@ in
 
     packages = [
       pkgs.gcc
-      # TODO: Build with specific go version after https://github.com/NixOS/nixpkgs/pull/339057 fixes
-      # (buildWithSpecificGo pkgs.golangci-lint)
-      pkgs.golangci-lint
+      (buildWithSpecificGo pkgs.golangci-lint)
       (buildWithSpecificGo pkgs.ko)
     ];
   };
