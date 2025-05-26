@@ -1,0 +1,12 @@
+{
+  "extends": ["config:base"],
+  "semanticCommits": true,
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    }
+  ]
+}
