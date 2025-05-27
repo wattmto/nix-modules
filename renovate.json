@@ -1,0 +1,12 @@
+{
+  "extends": ["config:best-practices"],
+  "semanticCommits": "enabled",
+  "semanticCommitScope": "deps",
+  "enabledManagers": ["github-actions"],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "commitMessageTopic": "GitHub Actions"
+    }
+  ]
+}
